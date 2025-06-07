@@ -16,7 +16,7 @@ Este é um projeto Spring Boot para gerenciamento de adoção de animais.
    ```
 3. A aplicação estará disponível em: http://localhost:8080
 4. O console H2 (banco de dados) estará disponível em: http://localhost:8080/h2-console
-   - JDBC URL: jdbc:h2:mem:adocaoanimais
+   - JDBC URL: jdbc:h2:file:./data/adocaoanimais
    - Username: sa
    - Password: password
 
