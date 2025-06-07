@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/base :: head"></head>
+<body>
+    <div th:replace="layout/base :: header"></div>
+
+    <div class="container">
+        <!-- <h1 class="text-center mb-4">Animais disponíveis para adoção</h1> -->
+        
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div th:each="animal : ${animais}" class="col">
+                <div class="card h-100 shadow-sm">
+                    <img th:if="${animal.imagem != null}" th:src="${animal.imagem}" class="card-img-top" alt="Foto do animal" style="height: 200px; object-fit: cover;">
+                    <img th:unless="${animal.imagem != null}" src="/images/default-pet.jpg" class="card-img-top" alt="Foto padrão" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${animal.nome}">Nome do Animal</h5>
+                        <p class="card-text">
+                            <strong>Raça:</strong> <span th:text="${animal.raca}">Raça</span><br>
+                            <strong>Idade:</strong> <span th:text="${animal.idade}">Idade</span> anos<br>
+                            <strong>Tipo:</strong> <span th:text="${animal.tipo}">Tipo</span>
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge" th:classappend="${animal.statusAdocao == 'Disponível' ? 'bg-success' : 
+                                                                 animal.statusAdocao == 'Em processo de adoção' ? 'bg-warning' : 'bg-secondary'}"
+                                  th:text="${animal.statusAdocao}">Status</span>
+                            <a th:href="@{/animais/{id}(id=${animal.id})}" class="btn btn-primary">Ver detalhes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="layout/base :: footer"></div>
+</body>
+</html> 

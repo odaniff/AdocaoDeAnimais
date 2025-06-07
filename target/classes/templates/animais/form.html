@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/base :: head"></head>
+<body>
+    <div th:replace="layout/base :: header"></div>
+
+    <div class="container">
+        <h1 class="mb-4" th:text="${animal.id == null ? 'Novo Animal' : 'Editar Animal'}">Formulário</h1>
+
+        <form th:action="@{${animal.id == null ? '/animais' : '/animais/' + animal.id}}" 
+              th:object="${animal}" 
+              method="post" 
+              enctype="multipart/form-data"
+              class="needs-validation" 
+              novalidate>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
+                        <div class="invalid-feedback">Por favor, informe o nome do animal.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tipo" class="form-label">Tipo</label>
+                        <select class="form-select" id="tipo" th:field="*{tipo}" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="Cachorro">Cachorro</option>
+                            <option value="Gato">Gato</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                        <div class="invalid-feedback">Por favor, selecione o tipo do animal.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="raca" class="form-label">Raça</label>
+                        <input type="text" class="form-control" id="raca" th:field="*{raca}" required>
+                        <div class="invalid-feedback">Por favor, informe a raça do animal.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="idade" class="form-label">Idade</label>
+                        <input type="number" class="form-control" id="idade" th:field="*{idade}" min="0" required>
+                        <div class="invalid-feedback">Por favor, informe a idade do animal.</div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="statusAdocao" class="form-label">Status de Adoção</label>
+                        <select class="form-select" id="statusAdocao" th:field="*{statusAdocao}" required>
+                            <option value="">Selecione o status</option>
+                            <option value="Disponível">Disponível</option>
+                            <option value="Em processo de adoção">Em processo de adoção</option>
+                            <option value="Adotado">Adotado</option>
+                        </select>
+                        <div class="invalid-feedback">Por favor, selecione o status de adoção.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="imagem" class="form-label">URL da Imagem</label>
+                        <input type="url" class="form-control" id="imagem" th:field="*{imagem}" placeholder="https://exemplo.com/imagem.jpg">
+                        <div class="form-text">Insira a URL da imagem do animal.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <textarea class="form-control" id="descricao" th:field="*{descricao}" rows="4" required></textarea>
+                        <div class="invalid-feedback">Por favor, informe uma descrição do animal.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a th:href="@{/}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+
+    <div th:replace="layout/base :: footer"></div>
+
+    <script>
+        // Form validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+</body>
+</html> 

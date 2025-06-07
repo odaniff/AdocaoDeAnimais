@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/base :: head"></head>
+<body>
+    <div th:replace="layout/base :: header"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <img th:if="${animal.imagem != null}" th:src="${animal.imagem}" class="img-fluid rounded shadow" alt="Foto do animal">
+                <img th:unless="${animal.imagem != null}" src="/images/default-pet.jpg" class="img-fluid rounded shadow" alt="Foto padrão">
+            </div>
+            <div class="col-md-6">
+                <h1 class="mb-4" th:text="${animal.nome}">Nome do Animal</h1>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Informações do Animal</h5>
+                        <p class="card-text">
+                            <strong>Tipo:</strong> <span th:text="${animal.tipo}">Tipo</span><br>
+                            <strong>Raça:</strong> <span th:text="${animal.raca}">Raça</span><br>
+                            <strong>Idade:</strong> <span th:text="${animal.idade}">Idade</span> anos<br>
+                            <strong>Status:</strong> 
+                            <span class="badge" th:classappend="${animal.statusAdocao == 'Disponível' ? 'bg-success' : 
+                                                               animal.statusAdocao == 'Em processo de adoção' ? 'bg-warning' : 'bg-secondary'}"
+                                  th:text="${animal.statusAdocao}">Status</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Descrição</h5>
+                        <p class="card-text" th:text="${animal.descricao}">Descrição do animal</p>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a th:href="@{/animais/{id}/editar(id=${animal.id})}" class="btn btn-primary">Editar</a>
+                    <form th:action="@{/animais/{id}/excluir(id=${animal.id})}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este animal?')">Excluir</button>
+                    </form>
+                    <a th:href="@{/}" class="btn btn-secondary">Voltar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="layout/base :: footer"></div>
+</body>
+</html> 
